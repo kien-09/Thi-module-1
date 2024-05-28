@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <h1>Đếm Ký Tự In Hoa</h1>
+    <input type="text" id="inputString" placeholder="Nhập chuỗi của bạn ở đây">
+    <button onclick="demKyTuInHoa()">Đếm Ký Tự In Hoa</button>
+    <div id="result"></div>
+</div>
+<script>
+    function demKyTuInHoa() {
+        const str = document.getElementById('inputString').value;
+        const inHoa = str.match(/[A-Z]/g);
+
+        if (inHoa) {
+            document.getElementById('result').textContent = `Số lượng ký tự in hoa là: ${inHoa.length}`;
+        } else {
+            document.getElementById('result').textContent = "The String does not contain upper char";
+        }
+    }
+</script>
+</body>
+</html>

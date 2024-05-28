@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        button {
+            margin-right: 10px;
+        }
+
+        input,
+        button {
+            margin-top: 5px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <button id="addPhoneBtn" onclick="toggleAddPhoneForm()">Thêm điện thoại</button>
+    <button id="homeBtn" onclick="showPhoneList()">Home</button>
+    <div id="addPhoneForm" style="display: none;">
+        <input type="text" id="phoneCode" placeholder="Mã điện thoại"><br>
+        <input type="text" id="phoneName" placeholder="Tên điện thoại"><br>
+        <input type="text" id="phoneBrand" placeholder="Hãng sản xuất"><br>
+        <input type="number" id="phonePrice" placeholder="Giá"><br>
+        <button onclick="addPhone()">Thêm</button>
+    </div>
+    <table id="phoneTable">
+        <tr>
+            <th>Mã điện thoại</th>
+            <th>Tên</th>
+            <th>Hãng sản xuất</th>
+            <th>Giá</th>
+        </tr>
+    </table>
+</div>
+<script>
+    class Phone {
+        constructor(id, name, brand, price) {
+            this._id = id
+            this._name = name
+            this._brand = brand
+            this._price = price
+        }
+
+        get id() {
+            return this._id
+        }
+
+        get name() {
+            return this._name
+        }
+
+        get brand() {
+            return this._brand
+        }
+
+        get price() {
+            return this._price
+        }
+
+        set id(id) {
+            this._id = id
+        }
+
+        set name(name) {
+            this._name = name
+        }
+
+        set brand(brand) {
+            this._brand = brand
+        }
+
+        set price(price) {
+            this._price = price
+        }
+
+        toString() {
+            return `ID: ${this._id}, Name: ${this._name}, brand: ${this._brand}, Price: ${this._price}`
+        }
+    }
+
+    class PhoneManager {
+        constructor() {
+            this.phones = []
+        }
+
+        addPhone(phone) {
+            this.phones.push(phone)
+        }
+
+        showPhones() {
+            this.phones.sort((a, b) => a.name.localeCompare(b.name))
+            this.phones.forEach(phone => console.log(phone.toString()))
+        }
+    }
+
+    let phones = [
+        new Phone("P001", "iPhone 12", "Apple", 15000000),
+        new Phone("P002", "Galaxy S21", "Samsung", 12000000)
+    ];
+
+    function showPhoneList() {
+        let table = document.getElementById("phoneTable");
+        table.innerHTML = "<tr><th>Mã điện thoại</th><th>Tên</th><th>Hãng sản xuất</th><th>Giá</th></tr>";
+
+        phones.sort((a, b) => a.name.localeCompare(b.name));
+        phones.forEach(phone => {
+            let row = table.insertRow();
+            let codeCell = row.insertCell(0);
+            let nameCell = row.insertCell(1);
+            let brandCell = row.insertCell(2);
+            let priceCell = row.insertCell(3);
+            codeCell.textContent = phone.id;
+            nameCell.textContent = phone.name;
+            brandCell.textContent = phone.brand;
+            priceCell.textContent = phone.price;
+        });
+
+        document.getElementById("addPhoneForm").style.display = "none";
+    }
+
+    // Hiển thị form thêm điện thoại
+    function toggleAddPhoneForm() {
+        document.getElementById("addPhoneForm").style.display = "block";
+        document.getElementById("phoneTable").innerHTML = "";
+        document.getElementById("phoneCode").value = '';
+        document.getElementById("phoneName").value = '';
+        document.getElementById("phoneBrand").value = '';
+        document.getElementById("phonePrice").value = '';
+    }
+
+    // Thêm mới điện thoại
+    function addPhone() {
+        let code = document.getElementById("phoneCode").value;
+        let name = document.getElementById("phoneName").value;
+        let brand = document.getElementById("phoneBrand").value;
+        let price = parseInt(document.getElementById("phonePrice").value);
+
+        if (code && name && brand && price) {
+            phones.push(new Phone(code, name, brand, price));
+            showPhoneList();
+        } else {
+            alert("Vui lòng nhập đầy đủ thông tin điện thoại!");
+        }
+    }
+    // Hiển thị danh sách điện thoại ban đầu
+    showPhoneList();
+</script>
+</body>
+</html>

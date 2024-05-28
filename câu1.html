@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function inputArray() {
+        const arr = [];
+        let n;
+
+        do {
+            n = prompt('Nhập n số phần tử của mảng (n <= 20):')
+            if (n>20){
+                alert('n phải nhỏ hoặc bằng 20')
+                return inputArray()
+            }
+            n = +n
+        } while (isNaN(n) || n < 1 || n > 20);
+
+        for (let i = 0; i < n; i++) {
+            let element
+            do {
+                element = prompt(`Nhập phần tử thứ ${i + 1}:`)
+                element = +element
+            } while (isNaN(element))
+            arr.push(element)
+        }
+
+        return arr
+
+    }
+    function getResult(arr) {
+        let sumEven = 0
+        let sumOdd = 0
+
+        arr.forEach(num => {
+            if (num % 2 === 0) {
+                sumEven += num
+            } else {
+                sumOdd += num
+            }
+        });
+
+        return sumEven - sumOdd
+    }
+    const arr = inputArray()
+    document.write('Các phần tử của mảng là: ', arr + '<br>')
+    const result = getResult(arr)
+    document.write('Hiệu của tổng các số chẵn và tổng các số lẻ: ', result)
+</script>
+</body>
+</html>
